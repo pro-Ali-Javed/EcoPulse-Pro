@@ -76,9 +76,9 @@ def main():
     print("Starting Hyperparameter Tuning...")
     # Basic parameter grid for Random Forest
     param_grid = {
-        'n_estimators': [100, 200, 300],
-        'max_depth': [None, 10, 20],
-        'min_samples_split': [2, 5]
+        'n_estimators': [10],
+        'max_depth': [5, 10],
+        'min_samples_split': [5]
     }
     
     base_model = RandomForestRegressor(random_state=42, n_jobs=-1)
