@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoPulse Pro</title>
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Plotly for Charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>🌍 EcoPulse</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-target="dashboard">🏠 Dashboard Home</li>
+                <li data-target="weather">🌤️ Weather Engine</li>
+                <li data-target="climate">🌧️ Climate Rainfall</li>
+                <li data-target="aqi">🌫️ AQI Radar</li>
+            </ul>
+            
+            <div class="sidebar-info glass-panel">
+                <h3>📊 Model Metrics</h3>
+                <div id="metrics-container">
+                    <p>Loading metrics...</p>
+                </div>
+            </div>
+
+            <div class="author-info">
+                <p class="role">Developed by</p>
+                <p class="name">Ali Javed</p>
+                <p class="role">BS Computer Science | FYP 2026</p>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            
+            <!-- Global Controls -->
+            <div class="controls glass-panel">
+                <div class="control-group">
+                    <label for="city-select">Target City</label>
+                    <select id="city-select"></select>
+                </div>
+                <div class="control-group">
+                    <label for="year-input">Target Year</label>
+                    <input type="number" id="year-input" min="1900" max="2100" value="2026">
+                </div>
+                <button id="refresh-btn" class="btn-primary">🔄 Sync Data</button>
+            </div>
+
+            <!-- Dashboard Sections -->
+            <div id="sections-container">
+                
+                <!-- Weather Section -->
+                <section id="weather-section" class="dashboard-section fade-in">
+                    <h2 class="section-title">🌤️ Hybrid Weather Engine (<span class="city-name-display"></span>)</h2>
+                    <div id="heatwave-alert" class="alert hidden">
+                        ⚠️ Heatwave Alert: Predicted temperature exceeds 42°C. Stay hydrated and avoid outdoor exposure between 11am–4pm.
+                    </div>
+                    
+                    <div class="grid-2">
+                        <div class="metric-card glass-panel">
+                            <h3>🤖 ML Delta Prediction</h3>
+                            <div class="metric-value">
+                                <div><span class="label">High:</span> <span id="ml-high" class="temp-val">--</span></div>
+                                <div class="subtext">Tomorrow's ML Prediction</div>
+                            </div>
+                            <div class="metric-value">
+                                <div><span class="label">Low:</span> <span id="ml-low" class="temp-val">--</span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card glass-panel">
+                            <h3>☁️ Standard API Forecast</h3>
+                            <div class="metric-value">
+                                <div><span class="label">High:</span> <span id="api-high" class="temp-val">--</span></div>
+                                <div class="subtext">Commercial API</div>
+                            </div>
+                            <div class="metric-value">
+                                <div><span class="label">Cond:</span> <span id="api-cond">--</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container glass-panel mt-4">
+                        <h3>📈 5-Day Live Weather Trend</h3>
+                        <div id="weather-trend-chart"></div>
+                    </div>
+                </section>
+
+                <!-- Climate Section -->
+                <section id="climate-section" class="dashboard-section fade-in">
+                    <h2 class="section-title">🌧️ Climate AI (<span class="year-display"></span>)</h2>
+                    
+                    <div class="grid-2">
+                        <div class="metric-card glass-panel">
+                            <h3>Total Expected Annual Rainfall</h3>
+                            <div class="metric-value giant-text" id="total-rainfall">-- mm</div>
+                        </div>
+                        <div class="metric-card glass-panel">
+                            <h3>Wettest Expected Month</h3>
+                            <div class="metric-value giant-text" id="wettest-month">--</div>
+                            <div class="subtext" id="wettest-amount">-- mm</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container glass-panel mt-4">
+                        <h3>📊 Annual Rainfall Distribution</h3>
+                        <div id="rainfall-bar-chart"></div>
+                    </div>
+                </section>
+
+                <!-- AQI Section -->
+                <section id="aqi-section" class="dashboard-section fade-in">
+                    <h2 class="section-title">🌫️ AQI Radar (<span class="city-name-display"></span>)</h2>
+                    
+                    <div class="grid-2">
+                        <div class="glass-panel">
+                            <h3 id="aqi-status">Status: <span>--</span></h3>
+                            <div class="pollutant-lexicon mt-4">
+                                <h4>🔬 Pollutant Lexicon</h4>
+                                <ul>
+                                    <li><strong>PM2.5</strong>: Deep lung penetration hazard.</li>
+                                    <li><strong>PM10</strong>: Respiratory tract irritant.</li>
+                                    <li><strong>O3</strong>: Causes shortness of breath.</li>
+                                    <li><strong>NO2</strong>: Auto-exhaust pollutant.</li>
+                                    <li><strong>SO2</strong>: Industrial smog component.</li>
+                                    <li><strong>CO</strong>: Reduces blood oxygen.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container glass-panel">
+                            <div id="aqi-radar-chart"></div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            
+            <footer class="footer mt-4">
+                EcoPulse Pro | Developed by Ali Javed | BS CS FYP 2026
+            </footer>
+        </main>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>
