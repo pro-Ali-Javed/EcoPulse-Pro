@@ -119,7 +119,7 @@ def get_weather(city: str):
                 "temp_min": float(round(ml_temp_min, 1)) if ml_temp_min is not None else None,
                 "std_max": float(round(std_max, 1)),
                 "std_min": float(round(std_min, 1)),
-                "heatwave_alert": bool(ml_temp_max > 42) if ml_temp_max is not None else False
+                "heatwave_alert": (True if ml_temp_max > 42 else False) if ml_temp_max is not None else False
             },
             "api_forecast": {
                 "temp_max": float(api_temp_max) if api_temp_max is not None else None,
